@@ -21,22 +21,22 @@
   <thead>
   <tr>
     <th rowspan="3" nowrap width="10%">
-      <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
-      <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
+      <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "'.html_safe + (@dates.first - 1).to_s + '"'.html_safe) %>
+      <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "'.html_safe + (@dates.last + @dates.size).to_s + '"'.html_safe) %>
     </th>
     <% if @dates.first.year == @dates.last.year %>
-      <th colspan=<%= "\"#{@dates.size}\"" %>><%= @dates.first.year %></th>
+      <th colspan=<%= "\"#{@dates.size}\"".html_safe %>><%= @dates.first.year %></th>
     <% else %>
-      <th colspan=<%= "\"#{@dates.first.end_of_year - @dates.first + 1}\"" %>><%= @dates.first.year %></th>
+      <th colspan=<%= "\"#{@dates.first.end_of_year - @dates.first + 1}\"".html_safe %>><%= @dates.first.year %></th>
       <% unless @dates.first.month == @dates.last.month %>
         <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_year + 1}\"" %>><%= @dates.last.year %></th>
       <% end %>
     <% end %>
   </tr>
   <tr>
-    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"" %>><%= l(:date)[:abbr_month_names][@dates.first.month] %></th>
+    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"".html_safe %>><%= l(:date)[:abbr_month_names][@dates.first.month] %></th>
     <% unless @dates.first.month == @dates.last.month %>
-      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"" %>><%= l(:date)[:abbr_month_names][@dates.last.month] %></th>
+      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"".html_safe %>><%= l(:date)[:abbr_month_names][@dates.last.month] %></th>
     <% end %>
   </tr>
   <tr>
