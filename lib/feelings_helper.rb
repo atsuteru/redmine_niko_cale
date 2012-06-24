@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module FeelingsHelper
   def transparent_png_patch_include_tag
-    '<!--[if lt IE 7]>' + javascript_include_tag("unitpngfix.js", :plugin => "redmine_niko_cale") +  '<![endif]--> '
+    '<!--[if lt IE 7]>'.html_safe + javascript_include_tag("unitpngfix.js", :plugin => "redmine_niko_cale") +  '<![endif]--> '.html_safe
   end
   def feeling_list option={}
     title = option[:title]
@@ -81,8 +81,8 @@ module FeelingsHelper
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(user) : h(user.name)) +")"
   end
   def description_of feeling
-    strip_tags(index_for(feeling) + "\n" +  feeling.description).gsub(/\r\n|\r|\n/, "<br />").gsub(/["']/,'') +
-    (feeling.has_comments? ? "<br>(#{l(:label_x_comments, :count => feeling.comments_count)})"  : "")
+    strip_tags(index_for(feeling) + "\n" +  feeling.description).gsub(/\r\n|\r|\n/, "<br />".html_safe).gsub(/["']/,'') +
+    (feeling.has_comments? ? "<br>(#{l(:label_x_comments, :count => feeling.comments_count)})".html_safe  : "")
   end
   def image_for feeling
     if feeling
@@ -93,12 +93,12 @@ module FeelingsHelper
     end
   end
   def link_to_feeling feeling, project_id=nil
-    null_image = ('&nbsp;' * 12)
+    null_image = (' '.html_safe * 12)
     image = image_for(feeling)
     image ? link_to(image, :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id) : null_image
   end
   def with_baloon object, message=""
-    '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
+    '<span onmouseover="showToolTip(event,\''.html_safe + message + '\');return false" onmouseout="hideToolTip()">'.html_safe + object + '</span>'.html_safe
   end
   def format_date date
     date.to_s.gsub(/-/, "/")
